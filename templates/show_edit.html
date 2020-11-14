@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card mt-4 mb-1 mx-auto" style="max-width: 540px;">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src={{pet.photo_url}} class="card-img" alt={{pet.name}}>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{pet.name}}</h5>
+                <p class="card-text">
+                    <b>species: </b> {{pet.species}}
+                </p>
+                {% if pet.age %}
+                <p class="card-text">
+                    <b>Age: </b> {{pet.age}}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    <a href="/" class="btn btn-info text-center">Back</a>
+</div>
+
+<h3 class="text-center mt-4">Edit "{{pet.name}}"</h3>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form action="/{{pet.id}}" method="POST">
+            {{form.hidden_tag()}}
+
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <div class="form-group">
+                {{field.label}}
+
+                {% if field.label == "Available" %}
+                {{field}}
+                {% else %}
+                {{field(class_="form-control")}}
+                {% endif %}
+
+                {% for err in field.errors %}
+                <small class="form-text text-danger">{{err}}</small>
+                {% endfor %}
+            </div>
+            {% endfor %}
+
+            <div class="form-group text-right">
+                <!-- <a href="#" class="btn btn-outline-info">Back</a> -->
+                <button class="btn btn-success">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

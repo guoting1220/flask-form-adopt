@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+<div class="container">
+    {% block content %}
+    <h1 class="text-center mt-3 mb-5">Pets</h1>
+
+    <h2>Available Pets:</h2>
+    <div class="row row-cols-2 row-cols-md-4">
+        {% for pet in pets %}
+        {% if pet.available %}
+        <div class="col mb-4">
+            <div class="card">
+                <img src={{pet.image_url()}} class="card-img-top" alt={{pet.name}}>
+                <div class="card-body">
+                    <h6 class="card-title text-info text-center">
+                        <a href="/{{pet.id}}">{{pet.name}}</a>
+                    </h6>
+                    <p class="card-text text-center">                       
+                        is <b>available!</b>
+                        
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <h2>Unavailable Pets:</h2>
+    <div class="row row-cols-2 row-cols-md-4">
+        {% for pet in pets %}
+        {% if not pet.available %}
+        <div class="col mb-4">
+            <div class="card">
+                <img src={{pet.image_url()}} class="card-img-top" alt={{pet.name}}>
+                <div class="card-body">
+                    <h6 class="card-title text-info text-center">
+                        <a href="/{{pet.id}}">{{pet.name}}</a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/add" class="btn btn-info text-center">Add a Pet</a>
+    </div>
+    {% endblock %}
+</div>
+
